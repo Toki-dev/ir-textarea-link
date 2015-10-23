@@ -1,0 +1,78 @@
+<!--
+@license
+Copyright (c) 2015 Igor Rubinovich. All rights reserved.
+This code may only be used under the MIT license found at http://opensource.org/licenses/MIT
+File browser and uploader.
+Works with arrays of (node fs.Stats)[https://nodejs.org/api/fs.html#fs_class_fs_stats] objects.
+Example:
+<ir-file-browser>DEMO HERE</ir-file-browser>
+@demo
+-->
+
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-selector/iron-selector.html">
+<link rel="import" href="../iron-image/iron-image.html">
+<link rel="import" href="../file-upload/file-upload.html">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../paper-ripple/paper-ripple.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../ir-reflect-to-native-behavior/ir-reflect-to-native-behavior.html">
+
+<!-- link rel="import" href="../fu-area/fu-area.html" -->
+<!-- link rel="import" href="./iron-select-item.html" -->
+
+<dom-module id="ir-link">
+  <style>
+	  paper-toggle-button{
+		  display: block;
+		  margin: 10px 0;
+	  }
+	  input{
+		  display: block;
+		  margin: 10px 0;
+	  }
+  </style>
+  <template>
+	<paper-dialog on-dom-changed="refitDialog" id="dialog"> <!--  on-iron-overlay-closed="closed" -->
+
+		<paper-dialog-scrollable id="scrollableDialog">
+				<div id="linkData">
+					<paper-dropdown-menu id="target1" selected="_self"  label="Target" raised>
+						<paper-menu on-iron-select="clickedPresetCommand" class="dropdown-content" selected="_blank" attr-for-selected="value">
+
+							<paper-item  value="_blank">_blank</paper-item>
+							<paper-item value="_parent">_parent</paper-item>
+							<paper-item value="_self">_self</paper-item>
+							<paper-item value="_top">_top</paper-item>
+						</paper-menu>
+					</paper-dropdown-menu>
+					 <paper-toggle-button id="follow" on-change="createLink">Nofollow</paper-toggle-button>
+					Link: <input is="iron-input" on-change="createLink" id="Href" value={{_linkState.url}} >
+					<div hidden$="{{_linkState.img}}">
+						Text: <input is="iron-input" on-change="createLink" id="TextValue" value={{_linkState.text}} >
+					</div>
+					<div hidden$="{{!_linkState.img}}">
+						Imgage: <input is="iron-input"  id="ifImage" value={{_linkState.img}} >
+					</div>
+				</div>
+		</paper-dialog-scrollable>
+		<div class="buttons">
+			<template is="dom-if" if="{{promptMode}}">
+				<paper-button raised on-click="promptSelect" >Ok</paper-button>
+				<paper-button raised on-click="hideDialog">Cancel</paper-button>
+			</template>
+		</div>
+	</paper-dialog>
+
+  </template>
+
+	<script src="ir-link.js"></script>
+</dom-module>
+
+
+
+
