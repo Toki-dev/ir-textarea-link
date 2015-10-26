@@ -1,6 +1,6 @@
 (function() {
 	Polymer({
-		is: 'ir-link',
+		is: 'ir-textarea-link',
 
 		properties: {
 
@@ -46,11 +46,13 @@
 
 		hideDialog : function (e) {
 			this.$.dialog.close();
+			this.selectionForget();
 		},
 
 		open : function(ev) {
 			var that = this;
 			var range = window.getSelection().getRangeAt(0);
+			console.log(range);
 			var child = range.startContainer.firstChild;
 			if(child){
 				if(child.tagName == 'IMG')
